@@ -30,22 +30,26 @@ def copy_pdf(source_pdf_path, output_pdf_path):
 
 # Main script
 def main():
-    folder_path = '..'  # Change this to your folder path
+    folder_path = '.'  # Change this to your folder path
     assignments = set()
     
     # Identify all assignments
     for filename in os.listdir(folder_path):
-        if filename.endswith('_Assignment.ipynb'):
-            assignment_name = filename.replace('_Assignment.ipynb', '')
+        if filename.endswith('CodingAssignment.ipynb'):
+            assignment_name = filename.replace('_CodingAssignment.ipynb', '')
             assignments.add(assignment_name)
     
     for assignment in assignments:
-        assignment_notebook = os.path.join(folder_path, f'{assignment}_Assignment.ipynb')
+        assignment_notebook = os.path.join(folder_path, f'{assignment}_CodingAssignment.ipynb')
         refsol_notebook = os.path.join(folder_path, f'{assignment}_RefSol.ipynb')
         
-        assignment_pdf = os.path.join(folder_path, f'{assignment}_Assignment.pdf')
-        refsol_pdf = os.path.join(folder_path, f'{assignment}_RefSol.pdf')
-        combined_pdf = os.path.join(folder_path, f'{assignment}_Combined.pdf')
+        pdf_folder = os.path.join('.', 'pdfs')
+        if not os.path.exists(pdf_folder):
+            os.makedirs(pdf_folder)
+
+        assignment_pdf = os.path.join(pdf_folder, f'{assignment}_CodingAssignment.pdf')
+        refsol_pdf = os.path.join(pdf_folder, f'{assignment}_RefSol.pdf')
+        combined_pdf = os.path.join(pdf_folder, f'{assignment}_Combined.pdf')
         
         # Convert the assignment notebook to PDF
         convert_notebook_to_pdf(assignment_notebook, assignment_pdf)
